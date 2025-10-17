@@ -59,25 +59,23 @@ export default function Navbar() {
           {/* Хэрэглэгч нэвтэрсэн бол */}
           {user ? (
             <div className="navbar-user">
-              {/* Хэрэглэгчийн эрх харуулах */}
-              <span className="user-role">
-                {userRole === 'admin' ? (
-                  <>
-                    <Icon icon="mdi:shield-crown" width="18" />
-                    Админ
-                  </>
-                ) : userRole === 'member' ? (
-                  <>
-                    <Icon icon="mdi:star" width="18" />
-                    Member
-                  </>
-                ) : (
-                  <>
-                    <Icon icon="mdi:account" width="18" />
-                    Хэрэглэгч
-                  </>
-                )}
-              </span>
+              {/* Хэрэглэгчийн эрх харуулах / Member болох */}
+              {userRole === 'admin' ? (
+                <span className="user-role role-admin">
+                  <Icon icon="mdi:shield-crown" width="18" />
+                  Админ
+                </span>
+              ) : userRole === 'member' ? (
+                <span className="user-role role-member">
+                  <Icon icon="mdi:star" width="18" />
+                  Гишүүн
+                </span>
+              ) : (
+                <Link to="/become-member" className="user-role role-user">
+                  <Icon icon="mdi:account-plus" width="18" />
+                  Member болох
+                </Link>
+              )}
               {/* Гарах товч */}
               <button onClick={handleSignOut} className="btn-signout">
                 <Icon icon="mdi:logout" width="18" />
