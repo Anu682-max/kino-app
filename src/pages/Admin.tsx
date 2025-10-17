@@ -147,13 +147,25 @@ export default function Admin() {
     if (!confirm('Энэ киног устгах уу?')) return;
 
     try {
-      const { error } = await supabase.from('movies').delete().eq('id', id);
-      if (error) throw error;
-      alert('Кино устгагдлаа');
+      console.log('Deleting movie with ID:', id); // Debug log
+      
+      const { data, error } = await supabase
+        .from('movies')
+        .delete()
+        .eq('id', id)
+        .select();
+
+      if (error) {
+        console.error('Supabase error:', error);
+        throw error;
+      }
+
+      console.log('Deleted movie:', data); // Debug log
+      alert('Кино амжилттай устгагдлаа!');
       fetchData();
     } catch (error) {
       console.error('Error deleting movie:', error);
-      alert('Кино устгахад алдаа гарлаа');
+      alert(`Кино устгахад алдаа гарлаа: ${error instanceof Error ? error.message : 'Тодорхойгүй алдаа'}`);
     }
   };
 
