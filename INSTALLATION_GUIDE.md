@@ -55,7 +55,7 @@ git clone https://github.com/[GITHUB_USERNAME]/[REPO_NAME].git
 ### Алхам 2: Folder руу орох
 
 ```bash
-cd movie-site
+cd 12.2-kino-app-full-stack
 # эсвэл өөр нэр байвал түүнийг бич
 ```
 
