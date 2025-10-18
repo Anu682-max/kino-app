@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import Navbar from '../components/Navbar';
+import SiteControl from '../config/SiteControl';
 import './BecomeMember.css';
 
 export default function BecomeMember() {
@@ -14,8 +15,8 @@ export default function BecomeMember() {
 
   // Member болох хүсэлт илгээх - Facebook хуудас руу шилжих
   const handleRequestMembership = () => {
-    // Facebook хуудас руу шилжих
-    window.open('https://www.facebook.com/Ba1jir', '_blank');
+    // SiteControl-с Facebook link авах
+    window.open(SiteControl.social.facebook, '_blank');
   };
 
   return (
@@ -26,55 +27,48 @@ export default function BecomeMember() {
           {/* Header */}
           <div className="member-header">
             <Icon icon="mdi:crown" className="crown-icon" />
-            <h1>Member болох</h1>
-            <p>Premium контент үзэх боломжтой</p>
+            <h1>{SiteControl.member.title}</h1>
+            <p>{SiteControl.member.subtitle}</p>
           </div>
 
           {/* Features */}
           <div className="member-features">
-            <div className="feature-item">
-              <Icon icon="mdi:check-circle" className="feature-icon" />
-              <div className="feature-text">
-                <h3>Бүх locked кино үзэх</h3>
-                <p>Premium контент рүү хязгааргүй хандалт</p>
+            {SiteControl.member.benefits.map((benefit, index) => (
+              <div key={index} className="feature-item">
+                <Icon icon="mdi:check-circle" className="feature-icon" />
+                <div className="feature-text">
+                  <p>{benefit}</p>
+                </div>
               </div>
-            </div>
-
-            <div className="feature-item">
-              <Icon icon="mdi:lightning-bolt" className="feature-icon" />
-              <div className="feature-text">
-                <h3>Шинэ кино эрт үзэх</h3>
-                <p>Шинэ контент хамгийн түрүүнд та үзнэ</p>
-              </div>
-            </div>
-
-            <div className="feature-item">
-              <Icon icon="mdi:quality-high" className="feature-icon" />
-              <div className="feature-text">
-                <h3>HD чанар</h3>
-                <p>1080p болон түүнээс дээш чанарын видео</p>
-              </div>
-            </div>
-
-            <div className="feature-item">
-              <Icon icon="mdi:account-star" className="feature-icon" />
-              <div className="feature-text">
-                <h3>VIP дэмжлэг</h3>
-                <p>Тусгай member онцлогууд болон дэмжлэг</p>
-              </div>
-            </div>
+            ))}
           </div>
 
           {/* Pricing */}
           <div className="member-pricing">
             <div className="price-tag">
-              <span className="price">Үнэгүй</span>
-              <span className="period">(Одоогоор)</span>
+              <span className="price">{SiteControl.member.pricing}</span>
             </div>
-            <p className="price-note">
-              <Icon icon="mdi:information" />
-              Facebook-р холбогдож member эрх авна уу
-            </p>
+          </div>
+
+          {/* Bank Info */}
+          <div className="bank-info">
+            <h3>💰 Төлбөрийн мэдээлэл</h3>
+            <div className="bank-details">
+              <p>{SiteControl.member.bankInfo.bank}</p>
+              <p>{SiteControl.member.bankInfo.account}</p>
+              <p>{SiteControl.member.bankInfo.iban}</p>
+              <p>{SiteControl.member.bankInfo.receiver}</p>
+            </div>
+          </div>
+
+          {/* Steps */}
+          <div className="member-steps">
+            <h3>📋 Хэрхэн member болох вэ?</h3>
+            {SiteControl.member.steps.map((step, index) => (
+              <div key={index} className="step-item">
+                <p>{step}</p>
+              </div>
+            ))}
           </div>
 
           {/* Action Button */}
@@ -91,7 +85,7 @@ export default function BecomeMember() {
             ) : (
               <>
                 <Icon icon="mdi:facebook" />
-                Facebook холбогдох
+                {SiteControl.member.buttonText}
               </>
             )}
           </button>

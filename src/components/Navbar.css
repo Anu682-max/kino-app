@@ -1,7 +1,9 @@
-/* Modern 2025 Netflix-Style Navbar */
+﻿/* Clean Navbar CSS - No Gradients */
+
 .navbar {
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), transparent);
+  background: rgba(15, 15, 15, 0.95);
   backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   position: fixed;
   top: 0;
   left: 0;
@@ -11,37 +13,34 @@
 }
 
 .navbar.scrolled {
-  background: rgba(0, 0, 0, 0.95);
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+  background: rgba(10, 10, 10, 0.98);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 .navbar-container {
   max-width: 100%;
   margin: 0 auto;
-  padding: 20px 4%;
+  padding: 18px 4%;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
 .navbar-logo {
-  font-size: 2rem;
-  font-weight: 900;
-  background: linear-gradient(135deg, #e50914 0%, #ff6b6b 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #e50914;
   text-decoration: none;
   transition: all 0.3s ease;
-  letter-spacing: -1px;
+  letter-spacing: -0.5px;
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
 .navbar-logo:hover {
-  transform: scale(1.05);
-  filter: brightness(1.2);
+  color: #ff1f1f;
+  transform: translateY(-1px);
 }
 
 .navbar-menu {
@@ -51,187 +50,169 @@
 }
 
 .navbar-link {
-  color: #e5e5e5;
+  color: rgba(255, 255, 255, 0.8);
   text-decoration: none;
-  font-weight: 600;
-  font-size: 1rem;
+  font-weight: 500;
+  font-size: 0.95rem;
   transition: all 0.3s ease;
-  position: relative;
-  padding: 8px 0;
   display: flex;
   align-items: center;
   gap: 6px;
-}
-
-.navbar-link::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: #e50914;
-  transition: width 0.3s ease;
+  padding: 8px 12px;
+  border-radius: 6px;
 }
 
 .navbar-link:hover {
-  color: white;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
 }
 
-.navbar-link:hover::after {
-  width: 100%;
+.navbar-link.admin-link {
+  color: #e50914;
 }
 
-.admin-link {
-  color: #ffd700;
-  font-weight: 700;
-}
-
-.admin-link::after {
-  background: #ffd700;
+.navbar-link.admin-link:hover {
+  background: rgba(229, 9, 20, 0.1);
+  color: #ff1f1f;
 }
 
 .navbar-user {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 15px;
 }
 
 .user-role {
-  color: white;
-  font-weight: 700;
-  font-size: 0.95rem;
   padding: 8px 16px;
-  border-radius: 8px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
   display: flex;
   align-items: center;
   gap: 6px;
-  backdrop-filter: blur(10px);
   text-decoration: none;
   transition: all 0.3s ease;
+  border: 1.5px solid;
+}
+
+.user-role.role-admin {
+  background: rgba(229, 9, 20, 0.1);
+  border-color: #e50914;
+  color: #ff4444;
+}
+
+.user-role.role-admin:hover {
+  background: rgba(229, 9, 20, 0.2);
+  border-color: #ff1f1f;
+}
+
+.user-role.role-member {
+  background: rgba(255, 193, 7, 0.1);
+  border-color: #ffc107;
+  color: #ffd54f;
+}
+
+.user-role.role-member:hover {
+  background: rgba(255, 193, 7, 0.2);
+  border-color: #ffd54f;
+}
+
+.user-role.role-user {
+  background: rgba(76, 175, 80, 0.1);
+  border-color: #4CAF50;
+  color: #66bb6a;
   cursor: pointer;
 }
 
-/* Admin эрх - Алтан өнгө */
-.role-admin {
-  background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 165, 0, 0.4));
-  border: 1px solid rgba(255, 215, 0, 0.6);
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
-}
-
-.role-admin:hover {
-  background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(255, 165, 0, 0.5));
-  box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
-}
-
-/* Member эрх - Цэнхэр өнгө */
-.role-member {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(37, 99, 235, 0.4));
-  border: 1px solid rgba(59, 130, 246, 0.6);
-  box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
-}
-
-.role-member:hover {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(37, 99, 235, 0.5));
-  box-shadow: 0 0 30px rgba(59, 130, 246, 0.3);
-}
-
-/* User эрх - Member болох товч (Ногоон өнгө) */
-.role-user {
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(5, 150, 105, 0.4));
-  border: 1px solid rgba(16, 185, 129, 0.6);
-  box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
-  animation: pulse-border 2s ease-in-out infinite;
-}
-
-.role-user:hover {
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(5, 150, 105, 0.5));
-  box-shadow: 0 0 30px rgba(16, 185, 129, 0.4);
+.user-role.role-user:hover {
+  background: rgba(76, 175, 80, 0.2);
+  border-color: #66bb6a;
   transform: translateY(-2px);
 }
 
-/* Pulse animation Member болох товчинд */
-@keyframes pulse-border {
-  0%, 100% {
-    border-color: rgba(16, 185, 129, 0.6);
-    box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
-  }
-  50% {
-    border-color: rgba(16, 185, 129, 1);
-    box-shadow: 0 0 30px rgba(16, 185, 129, 0.4);
-  }
-}
-
 .btn-signout {
-  padding: 10px 24px;
-  background: linear-gradient(135deg, #e50914, #c20812);
+  padding: 10px 20px;
+  background: #e50914;
   color: white;
   border: none;
   display: flex;
   align-items: center;
   gap: 8px;
-  border-radius: 8px;
-  font-weight: 700;
-  font-size: 0.95rem;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(229, 9, 20, 0.3);
 }
 
 .btn-signout:hover {
+  background: #ff1f1f;
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(229, 9, 20, 0.5);
-  background: linear-gradient(135deg, #ff1a1a, #e50914);
+  box-shadow: 0 4px 12px rgba(229, 9, 20, 0.3);
 }
 
 .btn-signout:active {
   transform: translateY(0);
 }
 
-.navbar-auth-buttons {
+.navbar-auth {
   display: flex;
   gap: 12px;
 }
 
+.btn-auth,
 .btn-login,
 .btn-signup {
   padding: 10px 24px;
   text-decoration: none;
-  font-weight: 700;
-  font-size: 0.95rem;
-  border-radius: 8px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
   transition: all 0.3s ease;
-}
-
-.btn-login {
-  color: white;
-  background: transparent;
-  border: 2px solid white;
-}
-
-.btn-login:hover {
-  background: white;
-  color: black;
-  transform: translateY(-2px);
-}
-
-.btn-signup {
-  color: white;
-  background: linear-gradient(135deg, #e50914, #c20812);
   border: none;
+}
+
+.btn-auth {
+  background: #e50914;
+  color: white;
+}
+
+.btn-auth:hover {
+  background: #ff1f1f;
+  transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(229, 9, 20, 0.3);
 }
 
-.btn-signup:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(229, 9, 20, 0.5);
-  background: linear-gradient(135deg, #ff1a1a, #e50914);
+.btn-login {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-/* Mobile Responsive */
+.btn-login:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.btn-signup {
+  background: #e50914;
+  color: white;
+}
+
+.btn-signup:hover {
+  background: #ff1f1f;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(229, 9, 20, 0.3);
+}
+
 @media (max-width: 768px) {
   .navbar-container {
-    padding: 16px 3%;
+    padding: 15px 3%;
   }
 
   .navbar-logo {
@@ -243,71 +224,20 @@
   }
 
   .navbar-link {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    padding: 6px 10px;
   }
 
   .user-role {
-    font-size: 0.85rem;
     padding: 6px 12px;
+    font-size: 0.8rem;
   }
 
   .btn-signout,
+  .btn-auth,
   .btn-login,
   .btn-signup {
     padding: 8px 16px;
     font-size: 0.85rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .navbar-menu {
-    gap: 10px;
-  }
-
-  .navbar-link span {
-    display: none;
-  }
-
-  .user-role {
-    padding: 6px 10px;
-    font-size: 0.8rem;
-  }
-}
-
-.navbar-auth {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.btn-signup {
-  padding: 8px 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  text-decoration: none;
-  border-radius: 6px;
-  font-weight: 600;
-  transition: transform 0.2s;
-}
-
-.btn-signup:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-}
-
-@media (max-width: 768px) {
-  .navbar-container {
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .navbar-menu {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 12px;
-  }
-
-  .user-role {
-    font-size: 14px;
   }
 }

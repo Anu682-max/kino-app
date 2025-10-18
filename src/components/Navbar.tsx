@@ -8,6 +8,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import { useAuth } from '../hooks/useAuth';
+import SiteControl from '../config/SiteControl';
 import './Navbar.css';
 
 export default function Navbar() {
@@ -21,7 +22,8 @@ export default function Navbar() {
   const handleSignOut = async () => {
     try {
       await signOut();
-      navigate('/login'); // Login хуудас руу шилжих
+      alert('Амжилттай гарлаа!');
+      navigate(SiteControl.auth.redirectAfterLogout); // SiteControl-с redirect авах
     } catch (error) {
       console.error('❌ Гарахад алдаа:', error);
     }
@@ -33,7 +35,7 @@ export default function Navbar() {
         {/* Лого */}
         <Link to="/" className="navbar-logo">
           <Icon icon="mdi:movie-open" width="32" height="32" />
-          Кино Сайт
+          {SiteControl.site.siteName}
         </Link>
         
         <div className="navbar-menu">
@@ -46,7 +48,7 @@ export default function Navbar() {
           {userRole === 'admin' && (
             <>
               <Link to="/admin" className="navbar-link admin-link">
-                <Icon icon="mdi:shield-crown" width="18" />
+                <Icon icon={SiteControl.roles.admin.icon} width="18" />
                 Админ
               </Link>
               <Link to="/help" className="navbar-link">
@@ -61,17 +63,17 @@ export default function Navbar() {
             <div className="navbar-user">
               {/* Хэрэглэгчийн эрх харуулах / Member болох */}
               {userRole === 'admin' ? (
-                <span className="user-role role-admin">
-                  <Icon icon="mdi:shield-crown" width="18" />
-                  Админ
+                <span className="user-role role-admin" style={{ color: SiteControl.roles.admin.color }}>
+                  <Icon icon={SiteControl.roles.admin.icon} width="18" />
+                  {SiteControl.roles.admin.name}
                 </span>
               ) : userRole === 'member' ? (
-                <span className="user-role role-member">
-                  <Icon icon="mdi:star" width="18" />
-                  Гишүүн
+                <span className="user-role role-member" style={{ color: SiteControl.roles.member.color }}>
+                  <Icon icon={SiteControl.roles.member.icon} width="18" />
+                  {SiteControl.roles.member.name}
                 </span>
               ) : (
-                <Link to="/become-member" className="user-role role-user">
+                <Link to="/become-member" className="user-role role-user" style={{ color: SiteControl.roles.user.color }}>
                   <Icon icon="mdi:account-plus" width="18" />
                   Member болох
                 </Link>
@@ -83,13 +85,11 @@ export default function Navbar() {
               </button>
             </div>
           ) : (
-            /* Нэвтрээгүй бол Login/Signup товчнууд */
+            /* Нэвтрээгүй бол Auth товч */
             <div className="navbar-auth">
-              <Link to="/login" className="navbar-link">
+              <Link to="/auth" className="btn-auth">
+                <Icon icon="mdi:login" width="18" />
                 Нэвтрэх
-              </Link>
-              <Link to="/signup" className="btn-signup">
-                Бүртгүүлэх
               </Link>
             </div>
           )}

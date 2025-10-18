@@ -4,6 +4,7 @@ import { Icon } from '@iconify/react';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../hooks/useAuth';
 import Navbar from '../components/Navbar';
+import SiteControl from '../config/SiteControl';
 import './Admin.css';
 
 interface User {

@@ -1,7 +1,7 @@
 .movie-player-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: 100px 20px 40px; /* Top padding для Navbar */
 }
 
 .video-wrapper {
@@ -82,11 +82,61 @@
 }
 
 @media (max-width: 768px) {
-  .movie-details h1 {
-    font-size: 24px;
+  .movie-player-container {
+    padding: 90px 15px 30px; /* Mobile дээр бага padding */
   }
 
   .movie-details {
     padding: 20px;
+  }
+
+  .movie-details h1 {
+    font-size: 24px;
+  }
+
+  .movie-description {
+    font-size: 14px;
+  }
+
+  .locked-badge,
+  .member-only-badge {
+    font-size: 13px;
+    padding: 6px 12px;
+  }
+
+  .become-member-btn {
+    padding: 12px 20px;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .movie-player-container {
+    padding: 80px 10px 20px;
+  }
+
+  .movie-details {
+    padding: 15px;
+  }
+
+  .movie-details h1 {
+    font-size: 20px;
+  }
+
+  .movie-description {
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .locked-badge,
+  .member-only-badge {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+
+  .become-member-btn {
+    padding: 10px 16px;
+    font-size: 14px;
+    width: 100%;
   }
 }
