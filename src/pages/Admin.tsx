@@ -39,7 +39,6 @@ export default function Admin() {
   const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
   const [videoFile, setVideoFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState(0);
   const [isLocked, setIsLocked] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
@@ -105,7 +104,6 @@ export default function Admin() {
   const handleVideoUpload = async (file: File): Promise<string | null> => {
     try {
       setUploading(true);
-      setUploadProgress(0);
       
       const fileExt = file.name.split('.').pop();
       const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
@@ -116,11 +114,7 @@ export default function Admin() {
         .from('movie-videos')
         .upload(filePath, file, {
           cacheControl: '3600',
-          upsert: false,
-          onUploadProgress: (progress) => {
-            const percent = (progress.loaded / progress.total) * 100;
-            setUploadProgress(Math.round(percent));
-          }
+          upsert: false
         });
 
       if (uploadError) throw uploadError;
@@ -130,7 +124,6 @@ export default function Admin() {
         .from('movie-videos')
         .getPublicUrl(filePath);
 
-      setUploadProgress(100);
       return publicUrl;
     } catch (error) {
       console.error('Video upload error:', error);
@@ -138,7 +131,6 @@ export default function Admin() {
       return null;
     } finally {
       setUploading(false);
-      setUploadProgress(0);
     }
   };
 
@@ -425,29 +417,14 @@ export default function Admin() {
                         </button>
                       </div>
                     )}
-                    {uploading && uploadProgress > 0 && (
-                      <div style={{ marginTop: '10px' }}>
-                        <div style={{ 
-                          background: '#e2e8f0',
-                          borderRadius: '10px',
-                          overflow: 'hidden',
-                          height: '20px'
-                        }}>
-                          <div style={{
-                            background: '#48bb78',
-                            height: '100%',
-                            width: `${uploadProgress}%`,
-                            transition: 'width 0.3s ease',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            color: 'white',
-                            fontSize: '12px',
-                            fontWeight: '600'
-                          }}>
-                            {uploadProgress}%
-                          </div>
-                        </div>
+                    {uploading && (
+                      <div style={{ 
+                        marginTop: '10px',
+                        color: '#4299e1',
+                        fontSize: '14px',
+                        fontWeight: '500'
+                      }}>
+                        ⏳ Видео upload хийж байна...
                       </div>
                     )}
                   </div>
