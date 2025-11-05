@@ -37,7 +37,9 @@ export default function Admin() {
   const [videoUrl, setVideoUrl] = useState('');
   const [thumbnailUrl, setThumbnailUrl] = useState('');
   const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
+  const [videoFile, setVideoFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
   const [isLocked, setIsLocked] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
@@ -100,14 +102,55 @@ export default function Admin() {
     }
   };
 
+  const handleVideoUpload = async (file: File): Promise<string | null> => {
+    try {
+      setUploading(true);
+      setUploadProgress(0);
+      
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+      const filePath = `videos/${fileName}`;
+
+      // Supabase Storage руу видео upload
+      const { error: uploadError } = await supabase.storage
+        .from('movie-videos')
+        .upload(filePath, file, {
+          cacheControl: '3600',
+          upsert: false,
+          onUploadProgress: (progress) => {
+            const percent = (progress.loaded / progress.total) * 100;
+            setUploadProgress(Math.round(percent));
+          }
+        });
+
+      if (uploadError) throw uploadError;
+
+      // Public URL авах
+      const { data: { publicUrl } } = supabase.storage
+        .from('movie-videos')
+        .getPublicUrl(filePath);
+
+      setUploadProgress(100);
+      return publicUrl;
+    } catch (error) {
+      console.error('Video upload error:', error);
+      alert('Видео upload хийхэд алдаа гарлаа!');
+      return null;
+    } finally {
+      setUploading(false);
+      setUploadProgress(0);
+    }
+  };
+
   const handleAddMovie = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
 
     try {
       let finalThumbnailUrl = thumbnailUrl;
+      let finalVideoUrl = videoUrl;
 
-      // Хэрэв файл сонгосон бол upload хийх
+      // Хэрэв thumbnail файл сонгосон бол upload хийх
       if (thumbnailFile) {
         const uploadedUrl = await handleThumbnailUpload(thumbnailFile);
         if (!uploadedUrl) {
@@ -117,10 +160,20 @@ export default function Admin() {
         finalThumbnailUrl = uploadedUrl;
       }
 
+      // Хэрэв видео файл сонгосон бол upload хийх
+      if (videoFile) {
+        const uploadedUrl = await handleVideoUpload(videoFile);
+        if (!uploadedUrl) {
+          setSubmitting(false);
+          return;
+        }
+        finalVideoUrl = uploadedUrl;
+      }
+
       const { error } = await supabase.from('movies').insert({
         title,
         description,
-        video_url: videoUrl,
+        video_url: finalVideoUrl,
         thumbnail_url: finalThumbnailUrl,
         is_locked: isLocked,
       });
@@ -133,6 +186,7 @@ export default function Admin() {
       setVideoUrl('');
       setThumbnailUrl('');
       setThumbnailFile(null);
+      setVideoFile(null);
       setIsLocked(false);
       fetchData();
     } catch (error) {
@@ -300,6 +354,108 @@ export default function Admin() {
                     💡 YouTube embed, MEGA.nz embed код/link эсвэл Google Drive share link оруулна уу
                   </small>
                 </div>
+
+                {/* Видео файл upload */}
+                <div className="form-group">
+                  <label>Эсвэл видео файл upload хийх</label>
+                  <div style={{ marginBottom: '15px' }}>
+                    <label 
+                      htmlFor="video-upload" 
+                      style={{ 
+                        display: 'inline-block',
+                        padding: '12px 24px',
+                        background: uploading ? '#cbd5e0' : '#48bb78',
+                        color: 'white',
+                        borderRadius: '8px',
+                        cursor: uploading ? 'not-allowed' : 'pointer',
+                        transition: 'all 0.3s ease',
+                        fontSize: '15px',
+                        fontWeight: '500'
+                      }}
+                      onMouseOver={(e) => !uploading && (e.currentTarget.style.background = '#38a169')}
+                      onMouseOut={(e) => !uploading && (e.currentTarget.style.background = '#48bb78')}
+                    >
+                      🎬 Видео файл upload
+                    </label>
+                    <input
+                      id="video-upload"
+                      type="file"
+                      accept="video/*"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          // Check file size (500MB max)
+                          if (file.size > 524288000) {
+                            alert('Видео файл хэт том байна! 500MB-аас бага байх ёстой.');
+                            return;
+                          }
+                          setVideoFile(file);
+                          setVideoUrl(''); // URL-г цэвэрлэх
+                        }
+                      }}
+                      disabled={uploading}
+                      style={{ display: 'none' }}
+                    />
+                    {videoFile && (
+                      <div style={{ 
+                        marginTop: '10px', 
+                        color: '#48bb78',
+                        fontSize: '14px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px'
+                      }}>
+                        ✅ {videoFile.name} ({(videoFile.size / 1024 / 1024).toFixed(2)} MB)
+                        <button
+                          type="button"
+                          onClick={() => setVideoFile(null)}
+                          disabled={uploading}
+                          style={{
+                            background: '#e53e3e',
+                            color: 'white',
+                            border: 'none',
+                            padding: '4px 10px',
+                            borderRadius: '5px',
+                            cursor: uploading ? 'not-allowed' : 'pointer',
+                            fontSize: '12px',
+                            opacity: uploading ? 0.5 : 1
+                          }}
+                        >
+                          ✕
+                        </button>
+                      </div>
+                    )}
+                    {uploading && uploadProgress > 0 && (
+                      <div style={{ marginTop: '10px' }}>
+                        <div style={{ 
+                          background: '#e2e8f0',
+                          borderRadius: '10px',
+                          overflow: 'hidden',
+                          height: '20px'
+                        }}>
+                          <div style={{
+                            background: '#48bb78',
+                            height: '100%',
+                            width: `${uploadProgress}%`,
+                            transition: 'width 0.3s ease',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            color: 'white',
+                            fontSize: '12px',
+                            fontWeight: '600'
+                          }}>
+                            {uploadProgress}%
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                  <small style={{ color: '#666', fontSize: '13px', display: 'block' }}>
+                    💡 MP4, MKV, AVI, WEBM форматыг дэмждэг. Хамгийн ихдээ 500MB
+                  </small>
+                </div>
+
                 <div className="form-group">
                   <label>Зураг (Thumbnail)</label>
                   

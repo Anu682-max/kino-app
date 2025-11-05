@@ -202,19 +202,20 @@ SELECT * FROM storage.buckets WHERE id = 'movie-thumbnails';
 -- ═══════════════════════════════════════════════════════════════════
 --
 -- 1. ✅ Энэ SQL-г Supabase SQL Editor дээр RUN хий
--- 2. 🔐 Website дээр Signup хий: admin@test.com / 123456
+-- 2. 🔐 Website дээр Signup хий: anulkhagvazaya5@test.com / 1234567
 -- 3. 📊 Supabase SQL Editor дээр дараах SQL-г ажиллуул:
 --
 --    UPDATE public.users
 --    SET role = 'admin'
---    WHERE email = 'admin@test.com';
+--    WHERE email = 'anulkhagvazaya5@test.com';
 --
 -- 4. 🧹 Browser Console (F12) дээр:
 --    localStorage.clear();
 --    sessionStorage.clear();
 --    location.reload();
---
--- 5. 🔐 Дахин Login: admin@test.com / 123456
+-- 5. 🎥 Website дээр дахин Login хий: anulkhagvazaya5@test.com / 1234567   
+
+--      ✔️ Кино нэмэх, засах, устгах боломжтой эсэхийг шалга!       
 -- 6. 👑 "Админ" цэс болон "📁 Зураг Upload" товч гарна!
 --
 -- ═══════════════════════════════════════════════════════════════════
