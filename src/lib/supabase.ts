@@ -1,8 +1,8 @@
 import { createClient } from '@supabase/supabase-js';
 
 // Supabase URL болон Anon key-г энд оруулна уу
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://yafflyltnolrqwcljswv.supabase.co';
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlhZmZseWx0bm9scnF3Y2xqc3d2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE0MzQ4NDYsImV4cCI6MjA3NzAxMDg0Nn0.fhOoXfcnUG8aoFH0xhx-Ozu2nOaKnHfSGqiFsD0uGd8';
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
