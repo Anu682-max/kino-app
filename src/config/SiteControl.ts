@@ -224,6 +224,7 @@ export const MEMBER_CONFIG = {
   // Банкны мэдээлэл
   bankInfo: {
     bank: "🏦 Банк: Хаан банк",
+    account: "💳 Данс: 5005679140020",
     iban: "🌐 IBAN: MN690005005679140020",
     receiver: "👤 Хүлээн авагч: Лхагвазаяа Ану"
   },
