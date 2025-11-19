@@ -20,7 +20,7 @@
 
 export const SITE_CONFIG = {
   // Сайтын нэр (Navbar болон Title дээр гарна)
-  siteName: "Rick and Morty",
+  siteName: "Movie nigth",
   
   // Сайтын тайлбар (Browser tab, SEO)
   siteDescription: "Монгол хэл дээрх орчин үеийн кино үзэх платформ",
